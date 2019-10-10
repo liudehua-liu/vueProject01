@@ -1,13 +1,15 @@
 <template>
+  <div >
     <fieldset>
-        <legend><h3>test_a</h3></legend>
-        sssssssss
+      <legend><h3>shop</h3></legend>
+      吃的吃吃吃吃吃吃
     </fieldset>
+  </div>
 </template>
 
 <script>
     export default {
-        name: "test_a"
+        name: "Shop"
     }
 </script>
 
