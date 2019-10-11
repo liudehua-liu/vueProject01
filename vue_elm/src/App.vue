@@ -1,18 +1,25 @@
 <template>
   <div id="app">
     <router-view/>
-    <MyHeader></MyHeader>
+
   </div>
 </template>
 
 <script>
-import MyHeader from "./components/MyHeader";
+
 export default {
   name: 'App',
-  components: {MyHeader}
+
 }
 </script>
 
 <style>
-
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  #app{
+    width: 100%;
+    height: 100%;
+  }
 </style>
