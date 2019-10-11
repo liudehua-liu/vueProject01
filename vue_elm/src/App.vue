@@ -9,7 +9,7 @@
 import MyHeader from "./components/MyHeader";
 export default {
   name: 'App',
-  components: {MyHeader, Home}
+  components: {MyHeader}
 }
 </script>
 

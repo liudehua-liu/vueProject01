@@ -1,6 +1,6 @@
 <template>
     <fieldset>
-      <legend><h2>我的首页</h2></legend>
+      <h3>我的</h3>
     </fieldset>
 </template>
 
