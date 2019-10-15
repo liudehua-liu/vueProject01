@@ -29,6 +29,11 @@ import Points from '../components/LYH/Points'
 import Detail2 from '../components/LYH/Detail2'
 import Vipdescription from '../components/LYH/VipDescription'
 import Usecart from '../components/LYH/UseCart'
+import Invoice from '../components/LYH/InvoiceRecord'
+import Payment from '../components/LYH/Payment'
+import Searchbl from '../components/Bl_shop/Search_bl'
+import TwoSearch from '../components/Bl_shop/TwoSearch'
+import Pricetou from '../components/Bl_shop/PriceTou'
 
 Vue.use(Vant);
 
@@ -64,5 +69,10 @@ export default new Router({
         [{path:'detail',component:Detail2}]
     },
     {path:"/usecart",component:Usecart},
+    {path:"/invoice",component:Invoice},
+    {path:"/payment",component:Payment},
+    {path:"searchbl",component:Searchbl},
+    {path:"/twosearch",component:TwoSearch},
+    {path:"/pricetou",component:Pricetou},
   ]
 })
