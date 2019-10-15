@@ -45,6 +45,11 @@ export default {
 </script>
 
 <style>
+  * {
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
 body,html{
   font-size: 16px;
 }
