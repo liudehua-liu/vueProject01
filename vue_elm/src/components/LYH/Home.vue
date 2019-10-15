@@ -94,12 +94,14 @@
 @import "//at.alicdn.com/t/font_1452054_9ohyw1ek1j.css";
 @import "//at.alicdn.com/t/font_1452054_hjwm6ybsy1k.css";
 @import "//at.alicdn.com/t/font_1452054_207kzv5gr26.css";
+
 #app {
-  width: 100%;
-  height: 41.4rem;
+  width: 23.4rem;
+  height: 41.6rem;
   background-color: #f5f5f5;
 }
   #head {
+    width: 23.4rem;
     background-color: #3190e8;
     height: 2.8rem;
     text-align: center;
@@ -124,6 +126,7 @@ font-size: 1.5rem;
   #longin {
     background-color: #3190e8;
     height: 6rem;
+    overflow: hidden;
   }
   #tx {
     font-size: 4rem;
@@ -140,7 +143,7 @@ font-size: 1.5rem;
     font-size: 1.5rem;
     font-family: "楷体";
     font-weight: 900;
-
+    margin-top: -.01rem;
   }
   #right{
     float: right;
@@ -164,21 +167,21 @@ font-size: 1.5rem;
   .yu_e {
 padding-top: 0.8rem;
     height: 5rem;
-    width: 33%;
+    width: 7.8rem;
     background-color: white;
     float: left;
   }
   .you_hui{
     padding-top: 0.8rem;
     height: 5rem;
-    width: 33%;
+    width: 7.7rem;
     background-color: white;
-    margin: 0 1% 0 1%;
+    margin: 0 0.1rem 0 0.1rem;
     float: left;
   }
   .ji_fen {
     height: 5rem;
-    width: 32%;
+    width: 7.7rem;
     padding-top: 0.8rem;
     background-color:white;
     float: left;
@@ -219,6 +222,7 @@ padding-top: 0.8rem;
     color: black;
   }
   .integral,.download {
+    width: 23.4rem;
     height: 3rem;
     background-color: white;
     margin-top: 0.1rem;

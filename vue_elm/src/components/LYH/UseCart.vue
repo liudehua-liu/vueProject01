@@ -10,6 +10,14 @@
       <input type="text" placeholder="请输入10位卡号" class="inp1" maxlength="10">
       <input type="text" placeholder="请输入6位卡密" class="inp2" maxlength="6">
       <button class="lpl">兑换</button>
+      <div class="foot">
+        <h3 class="lol">——温馨提示——</h3>
+        <p>新兑换的会员服务，权益以「会员说明」为准。</p>
+        <p>月卡：<span>30次</span>减免配送费。</p>
+        <p>季卡：<span>90次</span>减免配送费。</p>
+        <p>年卡：<span>360次</span>减免配送费。</p>
+        <p>＊仅限蜂鸟专送订单，每日最多减免3单，每单最高减免4元（一个月按31天计算）</p>
+      </div>
     </div>
 </template>
 
@@ -77,4 +85,19 @@ margin-top: 1.2rem;
     border-radius: .4rem ;
     font-weight: 900;
   }
+  .foot {
+    color: #aaa;
+    margin-top: 2rem;
+  }
+  .lol {
+    font-weight: 400;
+    font-size: .9rem;
+    margin-bottom: 1rem;
+  }
+  .foot p{
+    text-align: left;
+font-size: .8rem;
+    margin-left: 3rem;
+  }
+
 </style>

@@ -12,13 +12,17 @@
           </div>
           <div>
             <input type="text" placeholder="验证码" class="inp3" maxlength="4">
-            <div class="change_img">
-              <img src="" alt="">
+            <div class="change_img" @click="chang">
+              <img :src="a" alt="">
               <p>看不清</p>
-              <p style="color: #3190e8" @click="chang">换一张</p>
+              <p style="color: #3190e8" >换一张</p>
             </div>
           </div>
         </div>
+        <p>温馨提示：未注册过的账号，登录时将自动注册</p>
+        <p>注册过的用户可凭账号密码登录</p>
+        <button class="dl">登录</button>
+        <p id="reset">重置密码?</p>
       </div>
     </fieldset>
 </template>
@@ -26,14 +30,38 @@
 <script>
     export default {
         name: "Longin",
+      data(){
+          return {
+            a:""
+          }
+      },
+      methods:{
+        chang(data){
+          this.axios.post('https://elm.cangdu.org/v1/captchas','').then((response) => {
+            this.a = response.data.code;
+          })
+        }
+      },
+      created(){
+          this.axios.post('https://elm.cangdu.org/v1/captchas','').then((response) => {
+          this.chang = response.data.code
+        })
+      }
     }
 </script>
 
 <style scoped>
   @import "//at.alicdn.com/t/font_1452054_q8rpzaf9fg7.css";
   #longin {
-    width: 23.21rem;
-    height: 41.4rem;
+    width: 23.4rem;
+    height: 41.6rem;
+    background-color: #f5f5f5;
+  }
+  #longin p {
+    margin-left: 1rem;
+    margin-top: .5rem;
+    font-size: .8rem;
+    color: red;
   }
   #head {
     background-color:#3190e8;
@@ -58,7 +86,7 @@
     margin-top: 0.9rem;
   }
   .inp1{
-    width: 22.2rem;
+    width: 22.4rem;
     height: 3rem;
     padding-left: 1rem;
     border:none;
@@ -83,5 +111,21 @@
   }
   .change_img {
     float: right;
+    margin-right: 1rem;
+  }
+  .dl {
+    width: 21.4rem;
+    margin-left: 1rem;
+    height: 3rem;
+    background-color: #4cd964;
+    margin-top: .5rem;
+    color: white;
+    border-radius: .3rem;
+    font-weight: 700;
+  }
+  #reset {
+    text-align: right;
+    color: #3b95e9;
+    margin-right: 1rem;
   }
 </style>

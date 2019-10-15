@@ -22,10 +22,6 @@
 
 <style scoped>
   @import "//at.alicdn.com/t/font_1452054_q8rpzaf9fg7.css";
-  #app {
-    text-align: center;
-    position: absolute;
-  }
   #head {
     background-color: #3190e8;
     height: 2.8rem;

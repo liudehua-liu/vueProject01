@@ -1,5 +1,5 @@
 <template>
-    <fieldset>
+    <fieldset class="fnc">
       <div id="app">
         <div id="head">
           <router-link :to="{path:'/home'}">
@@ -42,23 +42,26 @@
           <div class="akl">开通会员</div>
           <div class="theshy">
             <p class="raven">1个月 <span>¥20</span></p>
+            <router-link :to="{path:'/payment'}">
             <p class="sword">购买</p>
+            </router-link>
           </div>
         </div>
         <router-link :to="{path:'/usecart'}" class="mark">
         <div class="lpl2">
-
           <span>兑换会员</span>
           <i class="iconchangyongtubiao-xianxingdaochu-zhuanqu-1 iconfont right"></i>
           <span class="rng">使用卡号卡密</span>
 
         </div>
         </router-link>
+        <router-link :to="{path:'/invoice'}" class="mark">
         <div class="lpl2">
           <span>购买记录</span>
           <i class="iconchangyongtubiao-xianxingdaochu-zhuanqu-1 iconfont right"></i>
           <span class="rng">开发票</span>
         </div>
+        </router-link>
       </div>
     </fieldset>
 </template>
@@ -73,9 +76,12 @@
   @import "//at.alicdn.com/t/font_1452054_wmj4ptrhqmh.css";
   @import "//at.alicdn.com/t/font_1452054_oyt0tqls2o.css";
   @import "//at.alicdn.com/t/font_1452054_9c5k3s6xnyv.css";
+  .fnc {
+    /*width: 100%;*/
+  }
   #app {
-    width: 23.2rem;
-    height: 41.4rem;
+    width: 100%;
+    height: 100%;
     background-color: #f5f5f5;
 
   }

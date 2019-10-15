@@ -37,8 +37,6 @@
       methods:{
         handleData(data){
           let keyArr = Object.keys(data);
-          // console.log(keyArr);
-
           keyArr.splice(keyArr.indexOf("index"), 1);
           for (var i = 0; i < keyArr.length; i+=2) {
             this.a.push(data[keyArr[i + 1]]);
@@ -128,6 +126,7 @@
     padding-left: 1rem;
     font-size: 1.3rem;
     font-family: "楷体";
+    margin-bottom: .1rem;
   }
   .miaoshu {
     list-style:none;
