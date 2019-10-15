@@ -18,6 +18,8 @@
         <i class="icon-right-arrow iconfont buyi buyii"></i>
       </router-link>
 
+
+
       <div class="gettime">
         <h3 class="htime">送达时间</h3>
         <div class="gettime_right">
@@ -28,7 +30,15 @@
 
       <!--第三块-->
       <div class="sale_bl">
-        <div class="sale_top"><p class="sale_s">支付方式</p><p>在线支付 ></p></div>
+        <div class="sale_top">
+          <span class="sale_s" >支付方式</span>
+          <p @click="temp=!temp">在线支付</p>
+        <!----------------------------------------------------->
+
+        <!------------------------------------------------>
+      </div>
+
+
         <div class="sale_button"><p>红包</p><p>暂时只在饿了么APP中支持</p></div>
       </div>
 
@@ -36,6 +46,7 @@
       <div class="sale_show">
         <div class="sale_img">
         <img src="http://elm.cangdu.org/img/164ad0b6a3917599.jpg" alt=""><span>效果演示</span>
+
         </div>
         <div class="show-center">
           <div class="center_t">
@@ -54,10 +65,15 @@
         </div>
       </div>
 
+
       <!--订单备注-->
       <div class="sale_bl s_footer">
+        <router-link :to="{path:'/dingdan'}">
         <div class="sale_top"><p class="sale_s">订单备注</p><p>口味、偏好等 ></p></div>
+        </router-link>
+        <router-link :to="{path:'/pricetou'}">
         <div class="sale_button"><p class="piao">发票抬头</p><p>不需要开发票 ></p></div>
+        </router-link>
       </div>
 
 
@@ -66,15 +82,57 @@
       <div class="buy_foot">
         <p class="bfp">待支付 ￥5000</p>
         <!--<p class="buyfoot_a">确认下单</p>-->
-        <router-link :to="{}"><p class="buyfoot_a">确认下单</p></router-link>
+        <router-link :to="{}"><p class="buyfoot_a" @click="sureadd">确认下单</p></router-link>
+        <div class="emp"></div>
       </div>
+
+
+      <!--定位点击出现底部弹框-->
+     <div class="fixed_button"  v-if="temp">
+       <p class="fustyle">支付方式</p>
+
+         <!------------------------------------------------------->
+
+  <van-radio-group v-model="radio" class="cha_color">
+  <van-radio name="1" checked-color="#07c160" label-position="left">货到付款(商家不支持货到付款)</van-radio>
+
+    <van-radio name="2" checked-color="#07c160" label-position="left" class="cha_color">在线支付</van-radio>
+       </van-radio-group>
+
+         <!------------------------------------->
+     </div>
+
 
     </div>
 </template>
 
 <script>
     export default {
-        name: "SureBuy"
+        name: "SureBuy",
+      data(){
+          return{
+            radio: '1',
+            show: false,
+            peiData:[],
+            temp:false
+          }
+      },
+      created(){
+        this.axios.get("https://elm.cangdu.org/bos/orders?offset=0&limit=20").then((response) => {
+          console.log(response.data);
+      })
+      },
+      methods: {
+        showPopup() {
+          this.show = true;
+        },
+       // 确认订单时候判断是否添加地址
+        sureadd(){
+
+        },
+
+      }
+
     }
 </script>
 
@@ -85,7 +143,11 @@
   *{
     padding: 0;
     margin: 0;
-
+  }
+  html,body{
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
   }
   .iconfont{
     font-size: 1.5rem;
@@ -102,6 +164,7 @@
     height: 41.3rem;
     background-color:gainsboro;
     position: relative;
+    background-color: rgb(245,245,245);
   }
   .buyz{
     text-decoration: none;
@@ -110,7 +173,7 @@
   .buyTitle{
     width: 100%;
     height: 2.7rem;
-   background-color: rgb(49,144,232);
+    background-color: rgb(49,144,232);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -202,17 +265,17 @@
     background-color: white;
   }
   .sale_img{
-    width: 100%;
+    width: 95%;
     height: 4.3rem;
     line-height: 4.3rem;
     font-size: 1.3rem;
     color: black;
-    padding-left: 0.6rem;
+    padding-left:5%;
     border-bottom: 0.05rem solid ghostwhite;
   }
   .sale_show img{
     width:2rem;
-    margin-top: 1rem;
+    margin-top: 1.2rem;
     vertical-align:text-bottom;
     padding-right: 0.5rem;
   }
@@ -254,6 +317,7 @@
     color: red;
   }
   .s_footer{
+    margin-bottom: 2rem;
    border-bottom: 3rem solid gainsboro;
   }
   .price_red{
@@ -263,14 +327,18 @@
     color: black;
   }
   .buy_foot{
-    width: 100%;
+    width:100%;
     height: 3.5rem;
     position: fixed;
     left: 0;
     top:38.6rem;
+    background-color: powderblue;
+  }
+  .emp{
+    clear: both;
   }
   .bfp{
-    width:70%;
+    width:65%;
     height: 3.5rem;
     line-height:3.5rem;
     background-color:black;
@@ -279,12 +347,39 @@
   }
 
   .buyfoot_a{
-    width: 30%;
+    width: 35%;
     height: 3.5rem;
     line-height:3.5rem;
     color: white;
     float: right;
-    background-color: green;
     text-align: center;
   }
+  .fixed_button{
+    width: 100%;
+    height: 3rem;
+    background-color: darkorange;
+    position: fixed;
+    left: 0;
+    top:30rem;
+    color:black;
+  }
+  .fustyle{
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    background-color:ghostwhite;
+  }
+  /*.fixed_button div{*/
+    /*width: 90%;*/
+    /*padding: 0 5%;*/
+    /*height: 3rem;*/
+    /*line-height: 3rem;*/
+  /*}*/
+.cha_color{
+  width: 90%;
+  background-color: white;
+  height: 65%;
+  padding: 5% 0;
+}
 </style>
