@@ -34,6 +34,12 @@ import Payment from '../components/LYH/Payment'
 import Searchbl from '../components/Bl_shop/Search_bl'
 import TwoSearch from '../components/Bl_shop/TwoSearch'
 import Pricetou from '../components/Bl_shop/PriceTou'
+import Forget from '../components/LYH/Forget'
+//------------------------------------------------
+import Msite from '../components/lizixin/Msite'
+import Food from '../components/lizixin/Food'
+//-------------------------------------------
+import Citys from "../components/Bl_shop/BegainCity"
 
 Vue.use(Vant);
 
@@ -71,8 +77,14 @@ export default new Router({
     {path:"/usecart",component:Usecart},
     {path:"/invoice",component:Invoice},
     {path:"/payment",component:Payment},
-    {path:"searchbl",component:Searchbl},
+    {path:"/searchbl",component:Searchbl},
     {path:"/twosearch",component:TwoSearch},
     {path:"/pricetou",component:Pricetou},
+    {path:"/forget",component:Forget},
+    {path:"/msite",component:Msite},
+    {path:"/food",component:Food},
+    {path:"/city",component:Citys},
+
+
   ]
 })
