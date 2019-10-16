@@ -76,9 +76,6 @@
   @import "//at.alicdn.com/t/font_1452054_wmj4ptrhqmh.css";
   @import "//at.alicdn.com/t/font_1452054_oyt0tqls2o.css";
   @import "//at.alicdn.com/t/font_1452054_9c5k3s6xnyv.css";
-  .fnc {
-    /*width: 100%;*/
-  }
   #app {
     width: 100%;
     height: 100%;

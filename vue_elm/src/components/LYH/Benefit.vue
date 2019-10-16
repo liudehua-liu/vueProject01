@@ -6,22 +6,64 @@
         </router-link>
         <span class="my">我的优惠</span>
       </div>
-      <transition>
-      <div class="center">
-      </div>
-      </transition>
+      <van-tabs v-model="active" color="#3190e8">
+        <van-tab title="红包">
+          <ul>
+            <li v-for="(v ,i) in a" :key="i">
+              <p>¥ <span>{{Arr[i][0]}}.{{Arr[i][1]}}</span></p>
+              <p>{{v.description_map.sum_condition}}</p>
+              <p>{{v.name}}</p>
+              <p>{{v.description_map.validity_periods}}</p>
+              <p>{{v.description_map.phone}}</p>
+              <span>{{v.description_map.validity_delta}}</span>
+            </li>
+          </ul>
+          </van-tab>
+        <van-tab title="商家代金券">
+
+          商家代金券
+        </van-tab>
+
+      </van-tabs>
+
     </div>
 </template>
 
 <script>
-  import animate from 'animate.css'
     export default {
-        name: "Benefit"
+        name: "Benefit",
+      data(){
+          return {
+            active:0,
+            a:[],
+            amount:[],
+            Arr:[],
+            limit:""
+          }
+      },
+      created(){
+        this.axios.get("https://elm.cangdu.org/promotion/v2/users/1/hongbaos?limit=20&offset=0").then((response) => {
+
+          for (let i=0; i < response.data.length;i++) {
+            this.a.push(response.data[i]);
+            this.amount.push(this.a[i].amount.toFixed(1));
+          }
+          for (let j = 0;j<response.data.length;j++) {
+            this.Arr.push(this.amount[j].split("."));
+          }
+          this.limit = this.a[2].limit_map.restaurant_flavor_ids;
+        })
+      }
     }
 </script>
 
 <style scoped>
   @import "//at.alicdn.com/t/font_1452054_q8rpzaf9fg7.css";
+  #app {
+    width: 23.4rem;
+    height: 41.6rem;
+    background-color: #f5f5f5;
+  }
   #head {
     background-color: #3190e8;
     height: 2.8rem;
@@ -33,7 +75,6 @@
     float: left;
     margin-left: 0.3rem;
     color: white;
-
   }
   .my{
     color: white;
@@ -41,43 +82,5 @@
     font-family: "楷体";
     font-weight: 900;
   }
-  .center {
-    width: 4rem;
-    height: 4rem;
-    /*background-color: red;*/
-    background: url("../../assets/icon_loading.png") no-repeat;
-    background-position: center 0rem;
-    /*animation: bg 2s linear infinite forwards alternate-reverse;*/
-    background-size: 4rem;
-    position: relative;
-    left: 45%;
-    margin-top: 60%;
-    overflow: hidden;
-  }
-  @keyframes bg {
-    0% {
-      background-position: center -4rem;
-    }
-    /*15% {*/
-      /*background-position: center -8rem;*/
-    /*}*/
-    /*30% {*/
-      /*background-position: center -12rem;*/
-    /*}*/
-    /*45% {*/
-      /*background-position: center -16rem;*/
-    /*}*/
-    /*60% {*/
-      /*background-position: center -20rem;*/
-    /*}*/
-    /*75% {*/
-      /*background-position: center -24rem;*/
-    /*}*/
-    /*90% {*/
-      /*background-position: center -28rem;*/
-    /*}*/
-    /*100% {*/
-      /*background-position: center -4rem;*/
-    /*}*/
-  }
+
  </style>

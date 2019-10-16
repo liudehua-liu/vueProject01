@@ -7,13 +7,16 @@
         </div>
         <div class="inps">
         <input type="text" placeholder="账号" class="inp1">
-          <div>
-            <input type="text" placeholder="密码" class="inp2">
+          <div class="password">
+            <input :type="temp?'password':'text'" placeholder="密码" class="inp2">
+            <div class="lpl">
+              <span @click="temp=!temp" :class="[temp?'invisible':'visible']"></span>
+            </div>
           </div>
-          <div>
+          <div class="mark">
             <input type="text" placeholder="验证码" class="inp3" maxlength="4">
+            <img :src="a" alt="" class="img">
             <div class="change_img" @click="chang">
-              <img :src="a" alt="">
               <p>看不清</p>
               <p style="color: #3190e8" >换一张</p>
             </div>
@@ -22,7 +25,9 @@
         <p>温馨提示：未注册过的账号，登录时将自动注册</p>
         <p>注册过的用户可凭账号密码登录</p>
         <button class="dl">登录</button>
+        <router-link :to="{path:'/forget'}">
         <p id="reset">重置密码?</p>
+        </router-link>
       </div>
     </fieldset>
 </template>
@@ -32,7 +37,8 @@
         name: "Longin",
       data(){
           return {
-            a:""
+            a:"",
+            temp:true
           }
       },
       methods:{
@@ -44,7 +50,7 @@
       },
       created(){
           this.axios.post('https://elm.cangdu.org/v1/captchas','').then((response) => {
-          this.chang = response.data.code
+          this.a = response.data.code
         })
       }
     }
@@ -93,7 +99,7 @@
     outline:none;
   }
   .inp2{
-    width: 80%;
+    width: 18rem;
     height: 3rem;
     padding-left: 1rem;
     border:none;
@@ -103,15 +109,20 @@
     margin-top: 0.1rem;
   }
   .inp3 {
-    width: 60%;
+    width: 13rem;
     height: 3rem;
     padding-left: 1rem;
     border:none;
     outline:none;
   }
+  .mark {
+    background-color: #fff;
+    margin-top: .1rem;
+  }
+
   .change_img {
     float: right;
-    margin-right: 1rem;
+    background-color: white;
   }
   .dl {
     width: 21.4rem;
@@ -128,4 +139,31 @@
     color: #3b95e9;
     margin-right: 1rem;
   }
-</style>
+  .password {
+    background-color: #fff;
+    margin-top: .1rem;
+  }
+  .lpl {
+    float: right;
+  }
+  .invisible {
+    float: right;
+    margin-top: .1rem;
+    margin-right: 1rem;
+    background: url('../../assets/off.png') no-repeat ;
+    background-position: center center;
+    background-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+  }
+  .visible {
+    float: right;
+    margin-top: .1rem;
+    margin-right: 1rem;
+    background: url('../../assets/on.png') no-repeat ;
+    background-position: center center;
+    background-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+  }
+  </style>
