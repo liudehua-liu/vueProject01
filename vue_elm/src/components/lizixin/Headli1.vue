@@ -1,6 +1,6 @@
 <template>
   <div class="headli">
-    <router-link :to="{path:'/#/msite'}">
+    <router-link :to="{path:'/msite'}">
       <i class="iconfont" style="font-size: 1.5rem; margin: 0.25rem 1rem;color: white">&#xe60b;</i>
     </router-link>
       <div class="citywhere">{{this.title}}</div>
@@ -43,6 +43,8 @@
     background-color: dodgerblue;
     position: fixed;
     z-index: 999;
+    left: 0;
+    top: 0;
   }
   .citywhere{
     width: 16.4rem;

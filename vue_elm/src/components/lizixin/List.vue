@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="choosedli" v-for="(v,i) in ball" :key="i">
+  <router-link :to="{path:'/cart',query:{dianName:v}}" class="choosedli" v-for="(v,i) in ball" :key="i">
     <img :src="liimghead+v.image_path" class="sellerliimg">
     <div class="liright">
       <div class="liright1">
@@ -21,14 +21,14 @@
 
       </div>
       <div class="liright3">
-        <div class="litip">￥20起送/{{v. piecewise_agent_fee.tips}}</div>
+        <div class="litip">￥{{v.float_minimum_order_amount}}起送/{{v. piecewise_agent_fee.tips}}</div>
         <div class="righttip">
           <div class="tipdes1">{{v.distance}}/</div>
           <div class="tipdes2">{{v.order_lead_time}}</div>
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
   </div>
 </template>
 
@@ -36,42 +36,161 @@
     export default {
         name: "List",
       props:{
-        toswiper:{
-          type: Array,
-          default: function () {
-            return [31.22967,121.4762];
+          conds:{
+            type:String,
+            default:""
           }
-        },
       },
       data(){
           return{
             liimghead:"http://elm.cangdu.org/img/",
             ball:[],
+            cball:[],
+            mball:[],
             starts:[],
+            shaixuan3data:[],
+            paidata:{ch:""},
+            getcheck: "" ,
+            toswiper: [31.22967,121.4762],
           }
       },
       created(){
         this.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude="+this.toswiper[0]+"&longitude="+this.toswiper[1]).then((response) => {
           this.ball = response.data;
-        }).then(()=>{
-          this.starts=[];
-          this.ball.forEach((v)=>{
-            let xing1= parseInt(v.rating);
-            let xing2= ((v.rating*10)%10)*25;
-            let arr=[];
-            for (let i=0;i<5;i++){
-              if (i<xing1) {
-                arr.push({color:"#ff9A0D" });
-              }else if(i<xing1+1){
-                arr.push({color:"rgb("+xing2+",0,0)"});
-              }else{
-                arr.push({color:"#D1D1D1"});
-              }
-            }
-            this.starts.push(arr);
-          });
-        });
+          this.cball=this.ball;
+          this.mball=this.ball;
+        }).then(()=>{this.listshow});
       },
+      methods:{
+          listshow(){
+              this.starts=[];
+              this.ball.forEach((v)=>{
+                let xing1= parseInt(v.rating);
+                let xing2= ((v.rating*10)%10)*25;
+                let arr=[];
+                for (let i=0;i<5;i++){
+                  if (i<xing1) {
+                    arr.push({color:"#ff9A0D" });
+                  }else if(i<xing1+1){
+                    arr.push({color:"rgb("+xing2+",0,0)"});
+                  }else{
+                    arr.push({color:"#D1D1D1"});
+                  }
+                }
+                this.starts.push(arr);
+              });
+
+          },
+        pai(ch){
+            this.paidata=ch;
+          if (this.ball[0]==undefined) {
+            this.ball=[];
+          }
+            if (ch.ch!="" && this.ball!=[]){
+              let arr=[];
+              this.ball.forEach((v)=>{
+                if (ch.ord1==0 && ch.ord2==0) {
+                  arr.push(v[ch.ch]);
+
+                }else{
+                  let mid=v[ch.ch].slice(ch.ord1);
+                  mid=mid.slice(0,-ch.ord2);
+                  let time=mid.split("小时");
+                  if (time.length==2) {
+                    mid=parseFloat(time[0])*60+parseFloat(time[1]);
+                  }
+                  let num=parseFloat(mid);
+                  arr.push(num);
+                }
+              });
+              if (ch.m=="max"){
+                for (let i=1;i<this.ball.length;i++){
+                  for (let j=0;j<i;j++){
+                    if(arr[i-j]>arr[i-j-1]){
+                      let exchangehelp=arr[i-j-1];
+                      arr[i-j-1]=arr[i-j];
+                      arr[i-j]=exchangehelp;
+                      exchangehelp=this.ball[i-j-1];
+                      this.ball[i-j-1]=this.ball[i-j];
+                      this.ball[i-j]=exchangehelp;
+
+                    }else {
+                      break;
+                    }
+                  }
+                }
+              } else {
+                for (let i=1;i<this.ball.length;i++){
+                  for (let j=0;j<i;j++){
+                    if(arr[i-j]<arr[i-j-1]){
+                      let exchangehelp=arr[i-j-1];
+                      arr[i-j-1]=arr[i-j];
+                      arr[i-j]=exchangehelp;
+                      exchangehelp=this.ball[i-j-1];
+                      this.ball[i-j-1]=this.ball[i-j];
+                      this.ball[i-j]=exchangehelp;
+                    }else {
+                      break;
+                    }
+                  }
+                }
+              }
+
+            }
+          this.listshow;
+          this.$set(this.ball,0,this.ball[0]);
+          if (this.ball[0]==undefined) {
+            this.ball=[];
+          }
+        },
+        shaixuan1(cate){
+            this.ball=[];
+          this.cball.forEach((v)=>{
+            let s=v.category.split("/");
+            if (s[1]==cate) {
+              this.ball.push(v);
+            }
+          });
+          this.mball=this.ball;
+          this.pai(this.paidata);
+          this.shaixuan3(this.shaixuan3data);
+        },
+        shaixuan3(cate){
+            if (cate!=[]){
+              this.shaixuan3data=cate;
+              this.ball=this.mball;
+              let a=cate.includes('蜂鸟专送');
+              let b=cate.length;
+              let c=0;
+              if (a==true){
+                c=1;
+                let arrf=[]
+                this.ball.forEach((v)=>{
+                  if (v.delivery_mode.text=="蜂鸟专送") {
+                    arrf.push(v);
+                  }
+                });
+                this.ball=arrf;
+              }
+              let arr=[];
+              this.ball.forEach((v1)=>{
+                let arr1=[];
+                v1.supports.forEach((v2)=>{
+                  arr1.push(v2.icon_name);
+                });
+                if (arr1.length>=b-c){
+                  let arr2=[...new Set([...arr1,...cate])];
+                  if (arr2.length<=arr1.length+c) {
+                    arr.push(v1);
+                  }
+                }
+              });
+              this.ball=arr;
+            }
+
+        }
+
+      }
     }
 </script>
 
@@ -94,6 +213,7 @@
     float :left;
   }
   .choosedli{
+    display: block;
     width: 100%;
     height: 6rem;
     padding :1rem 0.2rem 0.5rem 0.5rem;

@@ -3,17 +3,15 @@
   <div class="bunder_c">
     <swiper :options="swiperOption" ref="mySwiper">
       <swiper-slide v-for="(v,i) in pagebtn" :key="i">
-        <div class="titleset" v-for="(btnname,index) in pagepro[i]" :key="index" @click="dealtitle(btnname)">
+        <router-link :to="{path:'/food',query:{title:btnname}}" class="titleset" v-for="(btnname,index) in pagepro[i]" :key="index">
           <img :src="imghead+btnname[1]">
           <p>{{btnname[0]}}</p>
-        </div>
+        </router-link>
         <div style="width: 100%;height: 0.5rem;float: left"></div>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
-
-    <Toplist></Toplist>
     <Totop></Totop>
 
   <div class="bunder_b" >
@@ -25,9 +23,8 @@
 <script>
 import Totop from './Totop'
 import List from './List'
-import Toplist from './Toplist'
   export default {
-  components:{Totop,List,Toplist},
+  components:{Totop,List},
   name: "HomeSwiper",
     // components: {
     //   swiper,
@@ -43,7 +40,6 @@ import Toplist from './Toplist'
     },
   data() {
     return {
-      citywhere:"swiper",
       imghead:"http://fuss10.elemecdn.com",
       seller:[],
       btntitle:[],
@@ -81,10 +77,7 @@ import Toplist from './Toplist'
       });
     },
     methods:{
-      dealtitle(titlename){
-          this.citywhere=titlename;
-          this.$parent.appgetcity(this.citywhere);
-      },
+
       titlecount(){
         // 计算展示当前商品所需的页数
         const count = Math.ceil(this.btntitle.length / 8);
