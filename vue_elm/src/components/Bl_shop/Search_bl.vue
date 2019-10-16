@@ -15,13 +15,34 @@
 
 
       <!--搜索历史最开始隐藏-->
-      <div class="divshow">
+      <div class="divshow" v-if="historyda">
         <h4>搜索历史</h4>
         <ul>
           <li v-for="(p,index) in cunData" :key="index"><span>{{p.title}}</span><span @click="removeDom(index)" class="deletex">x</span>   </li>
-          <li class="clearall">清空搜索历史</li>
+          <li class="clearall" @click="clearall">清空搜索历史</li>
         </ul>
       </div>
+
+      <!--搜索出来的内容显示-->
+      <p v-if="shangjia">商家</p>
+      <div class="contshow" v-for="(q,i) in cunData" :key="i" v-if="getdatashow">
+        <!--搜索出来的所有店铺-->
+        <router-link :to="{}">
+        <div class="dianjia">
+          <div class="div_img">
+          <img data-v-3726cde6="" :src="'//elm.cangdu.org/img/'+q.image_path" class="restaurant_img">
+          </div>
+          <div class="imgright">
+            <p>{{q.name}}</p>
+            <p>月售 {{q.recent_order_num}} 单</p>
+            <p class="qisong">{{q.float_minimum_order_amount}}元起送/距离{{q.distance}}公里</p>
+          </div>
+        </div>
+
+        </router-link>
+
+      </div>
+
 
       <div class="nullshow" v-if="nullData">很抱歉! 无搜索结果</div>
 
@@ -36,10 +57,13 @@
         name: "Search_bl",
       data(){
           return{
-            searchData:"",
+            searchData:[],
             cunData:[],
             ulshow:false,
-            nullData:false
+            nullData:false,
+            getdatashow:false,
+            historyda:true,
+            shangjia:false
           }
       },
         methods:{
@@ -50,29 +74,37 @@
               });
               storage.set("content",this.cunData);
             this.axios.get("https://elm.cangdu.org/v4/restaurants?geohash=31.22967,121.4762&keyword="+v).then((response) => {
-              if(response.data.status==1){
+              if(response.data.length !=0){
                 //输入的东西成功请求到
-                this.ulshow=true;
-
+                this.getdatashow=true;
+                this.nullData=false;
+                this.historyda=false;
+                this.shangjia=true;
+                // console.log(response.data.status);
               }else{
                 //输入的东西没有请求到
-              this.nullData=true;
+                this.nullData=true;
+                this.ulshow=false;
+                this.historyda=false;
+                this.getdatashow=false;
               }
-              console.log(response.data);
+              // console.log(searchData);
+              this.cunData=response.data;
+              console.log(this.cunData);
+
             });
 
           },
           //点击删除对应纪录
           removeDom(index){
             this.cunData.splice(index,1);
-
             storage.set('content',this.cunData);
           },
         //  点击清楚所有搜索记录
           clearall(){
-
+            this.cunData=""
+            storage.set('content',this.cunData);
           }
-
         },
       mounted(){
      var aaaaa = storage.get('content');
@@ -167,5 +199,35 @@
     /*font-size: 1.3rem;*/
     font-weight: bold;
     color: grey;
+  }
+  .dianjia{
+    width: 94%;
+    padding: 3%;
+    background-color:white;
+    display: flex;
+    justify-content: space-between;
+  }
+  .contshow{
+    width: 100%;
+    font-size: 0.8rem;
+    line-height:1.3rem;
+    border-bottom: 0.03rem solid gainsboro;
+  }
+  .contshow a{
+   color:grey;
+  }
+  .div_img img{
+    width: 80%;
+    /*height: 10%;*/
+  }
+  .div_img{
+    width: 15%;
+  }
+  .imgright{
+    width: 85%;
+  }
+  .qisong{
+    border-bottom: 0.03rem solid gainsboro;
+    padding-bottom: 0.5rem;
   }
 </style>

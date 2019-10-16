@@ -2,9 +2,9 @@
     <div class="twosearch">
      <!--头部-->
       <div class="two_title">
-          <router-link :to="{}"><i class="icon-zuojiantou iconfont"></i></router-link>
-          <p>城市名{{}}</p>
-          <router-link :to="{}">切换城市</router-link>
+          <router-link :to="{path:'/city'}"><i class="icon-zuojiantou iconfont"></i></router-link>
+          <p>{{cityInfo.name}}</p>
+          <router-link :to="{path:'/city'}">切换城市</router-link>
       </div>
 
       <!--头部下边的-->
@@ -13,21 +13,27 @@
         <div @click="getdata(putvalu)">提交</div>
       </div>
 
-      <div class="searchfoot">
-        <p>搜索历史</p>
-        <p v-for="(q,index) in cunArr" :key="index">{{q.putcont}}</p>
-
-      </div>
-
-
       <!--隐藏的搜索历史-->
-      <div class="yindiv" v-if="yinData">
-       <div class="fordiv">
-         <p>店名{{}}</p>
-         <p class="search_di">地址{{}}</p>
+      <div>
+      <p class="history_bl">搜索历史</p>
+      <div class="searchfoot" v-if="yinData" v-for="(x,i) in cunArr" :key="i">
+        <p class="history_hang">{{x.putcont}} <span class="deleteone" @click="shanone(i)">x</span></p>
+
+        <!--<p >大家好{{x.address}}</p>-->
+      </div>
+      <p @click="clearAlld" class="clearp">清空所有</p>
+    </div>
+      <!--搜索出来的内容-->
+      <div class="yindiv" v-if="getshow">
+        <router-link :to="{}">
+       <div class="fordiv" v-for="(x,i) in cunArr" :key="i">
+         <p>{{x.name}}</p>
+         <p class="search_di">{{x.address}}</p>
        </div>
+        </router-link>
       </div>
 
+      <div v-if="sorryda">很抱歉,无搜索结果 </div>
     </div>
 </template>
 
@@ -38,15 +44,18 @@
         name: "TwoSearch",
       data(){
           return{
-            yinData:false,
+            yinData:true,
             putvalu:"",  //put里绑定的值
-            cunArr:""
+            cunArr:[],
+            getshow:false,
+            sorryda:false,
+            cityInfo:[]
           }
       },
       methods:{
         getdata(putvalu){
           //点击提交时获取put的值,并储存
-          if(this.putvalu==""){
+          if(putvalu == ""){
             alert("请输入你需要搜索的内容");
           }else{
             this.cunArr.push({
@@ -55,20 +64,42 @@
             });
             storage.set("cont",this.cunArr);
             this.axios.get("https://elm.cangdu.org/v1/pois?city_id=1&keyword="+putvalu+"&type=search").then((response) => {
-              console.log(response.data)
+              console.log(response.data);
+              if(response.data.length != 0){
+                console.log(123131)
+                this.cunArr=response.data;
+                this.yinData=false;
+                this.getshow=true;
+
+
+
+              }else{
+                this.yinData=false;
+                this.getshow=false;
+                this.sorryda=true
+              }
+
             });
-            // this.yinData=true;
+
           }
+        },
+        clearAlld(){
+          this.cunArr.splice(0,this.cunArr.length);
+        },
+        shanone(index){
+          this.cunArr.splice(index,1);
         }
+
       },
-      mounted(){
+      created(){
           var vlueData=storage.get('cont');
-        console.log(123);
-        console.log(vlueData);
+           console.log(vlueData);
           if(vlueData){
             this.cunArr=vlueData;
-          }
 
+          }
+        console.log(this.$route.query.cityName);
+          this.cityInfo=this.$route.query.cityName;
       }
     }
 </script>
@@ -132,9 +163,14 @@
     background-color:rgb(49,144,232);
   }
   .searchfoot{
-    padding:0.1rem 0.5rem;
+    padding:0.1rem 1.2rem;
+    line-height: 2rem;
     font-size: 0.8rem;
-    border-bottom: 0.05rem solid grey;
+    background-color: white;
+    border-bottom: 0.1rem solid ghostwhite;
+  }
+  .history_bl{
+    padding-left: 0.5rem;
   }
   .yindiv{
     width: 100%;
@@ -152,5 +188,17 @@
   .search_di{
     color: gray;
     font-size: 0.8rem;
+  }
+  .clearp{
+    padding: 0.8rem;
+    text-align: center;
+    background-color: white;
+  }
+  .history_hang{
+    display: flex;
+    justify-content: space-between;
+  }
+  .deleteone{
+    font-size: 1.1rem;
   }
 </style>
