@@ -4,6 +4,17 @@
       <van-sidebar-item @click="showf(p)"  v-for="(p,index) in footsData" :key="index" :title="p.name" />
     </van-sidebar>
 
+    <!--左边侧边栏-->
+    <!----------------------------------------------------------------->
+    <!--<van-sidebar class="leftNav" v-model="activeKey">-->
+      <!--&lt;!&ndash;<van-sidebar-item title="标签名称" dot />&ndash;&gt;-->
+      <!--<van-sidebar-item @click="showf(p)"  v-for="(p,index) in footsData" :key="index" :title=""  info="5" />p.name-->
+      <!--&lt;!&ndash;<van-sidebar-item title="标签名称" info="99+" />&ndash;&gt;-->
+    <!--</van-sidebar>-->
+
+
+
+    <!----------------------------------------------------------------->
 
     <!--右边部分-->
     <div class="showFoods">
@@ -17,8 +28,8 @@
 
       <!--右边身-->
 
-<router-link :to="{}">
-       <div class="lopa" v-for="(v,i) in showfoods" :key="i">
+<router-link v-for="(v,i) in showfoods" :key="i" :to="{path:'/dianxiang',query:{dianDes:v}}">
+       <div class="lopa">
          <div class="foosLeft">
            <img class="shopimg" :src="'http://elm.cangdu.org/img/'+v.image_path" alt="">
          </div>
@@ -52,13 +63,15 @@
         desData:[],
         activeIndex: 0,
         showfoods:'',
-        showtitle:''
+        showtitle:'',
+        showId:"",
+        showUrl:"https://elm.cangdu.org/shopping/v2/menu?restaurant_id="
       }
     },
     mounted(){
-      this.axios.get("https://elm.cangdu.org/shopping/v2/menu?restaurant_id=1").then((response) => {
+      this.showId=this.$route.query.dianName.id;
+      this.axios.get(this.showUrl+this.showId).then((response) => {
         this.footsData=(response.data);
-        // console.log( this.footsData);
       })
     },
     methods:{
@@ -72,8 +85,7 @@
       showbtn(){
          alert("这个我还没做，具体来说我不会做，我只会做一个弹框");
       }
-    }
-
+    },
   }
 </script>
 

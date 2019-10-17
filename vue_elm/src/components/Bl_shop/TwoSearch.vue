@@ -25,7 +25,7 @@
     </div>
       <!--搜索出来的内容-->
       <div class="yindiv" v-if="getshow">
-        <router-link :to="{}">
+        <router-link :to="{path:'/msite'}">
        <div class="fordiv" v-for="(x,i) in cunArr" :key="i">
          <p>{{x.name}}</p>
          <p class="search_di">{{x.address}}</p>
