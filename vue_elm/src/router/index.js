@@ -85,6 +85,5 @@ export default new Router({
     {path:"/food",component:Food},
     {path:"/city",component:Citys},
 
-
   ]
 })
