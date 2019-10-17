@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+axios.defaults.withCredentials = true
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
@@ -40,6 +41,13 @@ import Msite from '../components/lizixin/Msite'
 import Food from '../components/lizixin/Food'
 //-------------------------------------------
 import Citys from "../components/Bl_shop/BegainCity"
+import Exchange from "../components/LYH/Exchange"
+import Commend from "../components/LYH/Commend"
+import HbHistory from "../components/LYH/HbHistory"
+import HbDescription from "../components/LYH/HbDescription"
+import Coupon from "../components/LYH/Coupon"
+import Dianxiang from '../components/Bl_shop/Dianxiang'
+import Searchdizhi from '../components/Bl_shop/Searchdizhi'
 
 Vue.use(Vant);
 
@@ -84,6 +92,12 @@ export default new Router({
     {path:"/msite",component:Msite},
     {path:"/food",component:Food},
     {path:"/city",component:Citys},
-
+    {path:"/exchange",component:Exchange},
+    {path:"/commend",component:Commend},
+    {path:"/hbHistory",component:HbHistory},
+    {path:"/hbDescription",component:HbDescription},
+    {path:"/coupon",component:Coupon},
+    {path:"/dianxiang",component:Dianxiang},
+    {path:"/searchdizhi",component:Searchdizhi}
   ]
 })
