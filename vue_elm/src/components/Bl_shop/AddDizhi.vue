@@ -34,7 +34,7 @@
       <div class="eatdi">
         <div class="songcan">送餐地址</div>
         <div class="nnnn">
-          <router-link :to="{}"><input type="text" placeholder="小区/写字楼/学校等" class="xxx" v-model="where"></router-link>
+          <router-link :to="{path:'/searchdizhi'}"><input type="text" placeholder="小区/写字楼/学校等" class="xxx" v-model="where"></router-link>
           <input type="text" placeholder="详细地址(如门牌号等)" class="desdizhi" v-model="jtdz">
         </div>
       </div>
@@ -75,6 +75,9 @@
       pleasesure() {
         if(this.myname==""&&this.mytel==""&&this.jtdz==""&&this.where==""){
           this.temp=true;
+        }else{
+          this.$router.push({path:"/searchdizhi"});
+
         }
 
       }
@@ -128,7 +131,7 @@
     color: white;
     text-align: center;
     position: relative;
-    background-color: mediumblue;
+    background-color: rgb(49,144,232);
   }
 
   .addcont {
