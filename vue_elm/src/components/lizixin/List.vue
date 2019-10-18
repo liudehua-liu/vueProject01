@@ -1,6 +1,6 @@
 <template>
   <div>
-  <router-link :to="{path:'/cart',query:{dianName:v}}" class="choosedli" v-for="(v,i) in ball" :key="i">
+  <router-link v-for="(v,i) in ball" :to="{path:'/cart',query:{dianName:v}}" class="choosedli"  :key="i">
     <img :src="liimghead+v.image_path" class="sellerliimg">
     <div class="liright">
       <div class="liright1">
@@ -57,6 +57,7 @@
       created(){
         this.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude="+this.toswiper[0]+"&longitude="+this.toswiper[1]).then((response) => {
           this.ball = response.data;
+          // console.log(this.ball);
           this.cball=this.ball;
           this.mball=this.ball;
         }).then(()=>{this.listshow});

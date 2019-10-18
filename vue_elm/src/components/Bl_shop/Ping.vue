@@ -118,7 +118,7 @@
           this.axios.get("https://elm.cangdu.org/ugc/v2/restaurants/1/ratings?offset=0&limit=10").then((response) => {
             // console.log(response.data);
             this.userData=response.data;
-            console.log(this.userData);
+            // console.log(this.userData);
 
            // console.log(response.data.item_ratings);
           })
