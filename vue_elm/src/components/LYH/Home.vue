@@ -2,7 +2,9 @@
     <fieldset>
       <div id="app">
         <div id="head">
+          <router-link :to="{path:'/msite'}">
           <i class="iconjiantou-px--copy-copy iconfont"></i>
+          </router-link>
           <span class="my">我的</span>
         </div>
         <div class="h"></div>
@@ -10,7 +12,7 @@
           <a href="http://localhost:8080/#/longin">
             <i class="icontouxiang iconfont" id="tx"></i>
             <div class="dz">
-              <p class="dl">登录/注册</p>
+              <p class="dl">{{getname}}</p>
               <i class="iconshouji iconfont" id="phone"></i><span class="wu">暂无绑定手机号</span>
             </div>
             <i class="iconarrow iconfont" id="right"></i>
@@ -81,7 +83,12 @@
 
 <script>
     export default {
-        name: "Home"
+        name: "Home",
+      computed:{
+          getname(){
+            return this.$route.query.username
+          }
+      }
     }
 </script>
 

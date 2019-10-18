@@ -17,7 +17,7 @@
         <div class="icon">
           <img src="../../assets/elm.png" alt="" id="img">
           <p class="describe">下载饿了么APP</p>
-          <button class="xz" @click="temp=!temp">下载</button>
+          <button class="xz" @click="temp=true">下载</button>
         </div>
       </div>
     </fieldset>
