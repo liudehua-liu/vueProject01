@@ -63,7 +63,7 @@ export default new Router({
         {path:'ping',component:Ping,default:ShopShow}
       ]},
     {path:"/surebuy",component:SureBuy},
-    // {path:"/pricetou",component:PriceTou},
+    {path:"/pricetou",component:PriceTou},
     {path:"/dingdan",component:Dingdan},
     {path:"/addD",component:AddD},
     {path:"/dizhi",component:AddDizhi},
