@@ -48,6 +48,17 @@ import HbDescription from "../components/LYH/HbDescription"
 import Coupon from "../components/LYH/Coupon"
 import Dianxiang from '../components/Bl_shop/Dianxiang'
 import Searchdizhi from '../components/Bl_shop/Searchdizhi'
+import Info from '../components/LYH/Info'
+import Setusername from '../components/LYH/Setusername'
+import Address from '../components/LYH/Address'
+import Add from '../components/LYH/Add'
+import AddDetail from '../components/LYH/AddDetail'
+import Nobenefit from '../components/LYH/Nobenefit'
+import Order from '../components/lizixin/Order'
+import Search from '../components/lizixin/Search'
+
+import Shopyou from '../components/Bl_shop/Shopyou'
+import Foodjiandu from '../components/Bl_shop/Foodjiandu'
 
 Vue.use(Vant);
 
@@ -63,7 +74,6 @@ export default new Router({
         {path:'ping',component:Ping,default:ShopShow}
       ]},
     {path:"/surebuy",component:SureBuy},
-    {path:"/pricetou",component:PriceTou},
     {path:"/dingdan",component:Dingdan},
     {path:"/addD",component:AddD},
     {path:"/dizhi",component:AddDizhi},
@@ -98,6 +108,19 @@ export default new Router({
     {path:"/hbDescription",component:HbDescription},
     {path:"/coupon",component:Coupon},
     {path:"/dianxiang",component:Dianxiang},
-    {path:"/searchdizhi",component:Searchdizhi}
+    {path:"/searchdizhi",component:Searchdizhi},
+    {path:"/info",component:Info},
+    {path:"/setusername",component:Setusername},
+    {path:"/address",component:Address},
+    {path:"/add",component:Add},
+    {path:"/addDetail",component:AddDetail},
+    {path:"/nobenefit",component:Nobenefit},
+    {path:"/order",component:Order},
+    {path:"/search",component:Search},
+    {path:"/shopyou",component:Shopyou},
+    {path:"/foodjiandu",component:Foodjiandu},
+
+
+
   ]
 })
