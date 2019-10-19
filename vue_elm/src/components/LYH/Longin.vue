@@ -61,7 +61,6 @@
           })
         },
         login(){
-          console.log(1);
           if (this.username.trim()==''){
             this.content="请输入用户名/邮箱/手机号";
             this.tem=!this.tem
@@ -82,7 +81,8 @@
                 this.content=response.data.message;
                 this.tem=!this.tem
               }else{
-                this.$router.push({path:"/home",query:{username:response.data.username}})
+                this.storage.set("userinfo",response.data);
+                this.$router.push({path:"/home"})
               }
 
             })
