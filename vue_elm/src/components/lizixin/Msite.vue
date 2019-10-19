@@ -1,8 +1,8 @@
 <template>
   <div class="homediv">
-    <Headli></Headli>
-    <HomeSwiper></HomeSwiper>
-    <Footli></Footli>
+    <Headli :citywhere="citywhere" :alldata="alldataadd"></Headli>
+    <HomeSwiper ref="shop"></HomeSwiper>
+    <Footli :toprop="'li1'" :alldata="alldataadd"></Footli>
   </div>
 </template>
 
@@ -10,9 +10,40 @@
   import HomeSwiper from "./swiper"
   import Headli from "./Headli"
   import Footli from "./Footli"
+  import List from "./List"
     export default {
         name: "Msite",
-      components:{HomeSwiper,Headli,Footli},
+      components:{HomeSwiper,Headli,Footli,List},
+      data(){
+        return{
+          citywhere:"",
+          toswiper: [31.22967,121.4762],
+          ball:[],
+          alldataadd:["msite"]
+        }
+      },
+      methods:{
+        test(){
+        }
+      },
+      created(){
+        if (this.$router.query!=undefined) {
+            this.citywhere=this.$router.query.citywhere;
+            this.toswiper=this.$router.query.local;
+            this.storage.set("citywhere",this.citywhere);
+            this.storage.set("toswiper",this.toswiper);
+          }
+          if(this.storage.get("citywhere")!=undefined){
+            this.citywhere=this.storage.get("citywhere");
+            this.toswiper=this.storage.get("toswiper");
+          }
+        this.storage.set("alldata",this.alldataadd)
+        this.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude="+this.toswiper[0]+"&longitude="+this.toswiper[1]).then((response) => {
+          this.ball = response.data;
+          this.$refs.shop.getda(this.ball);
+        });
+
+      },
     }
 </script>
 
@@ -37,6 +68,5 @@
   .homediv{
     width: 100%;
     height: 100%;
-    overflow: hidden;
   }
 </style>

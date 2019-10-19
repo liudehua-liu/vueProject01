@@ -2,7 +2,11 @@
   <div class="toplistbox">
     <div style="width: 100%;height:2.6rem;border-bottom: 0.02rem solid #D4D4D4">
     <div class="list1" @click="dropdown(),clist1('showlist1')">
-      <div class="list1con"><div class="listf">{{fenlei}}</div><i class="iconfont ">&#xe604;</i></div>
+      <div class="list1con">
+        <div class="listf" v-show="!fenleio">分类</div>
+        <div class="listf" v-show="fenleio">{{fenlei}}</div>
+        <i class="iconfont ">&#xe604;</i>
+      </div>
     </div>
     <div class="list1" @click="clist1('showlist2')" style="border-left: 0.01rem solid #EBEBEB;border-right: 0.01rem solid #EBEBEB">
       <div class="list1con"><div class="listf">排序</div><i class="iconfont ">&#xe604;</i></div>
@@ -14,7 +18,7 @@
 
   <div class="droplist">
     <div class="drop1" v-show="showlist1">
-      <div class="dropli1" v-for="(v,i) in list1btn" :key="i" :style="allgray" :ref="'whitechange'+i" @click.stop="drop11(v[0],'whitechange'+i)" >
+      <div class="dropli1" v-for="(v,i) in list1btn" :key="i" :style="allgray" :ref="'whitechange'+i" @click.stop="drop11(v[0],'whitechange'+i),fenlei=v[0]" >
         <img :src="imghead+v[2]" class="dropli1img">
         <div class="showlistf1">{{v[0]}}</div>
 
@@ -90,6 +94,7 @@
               slidesPerView: 'auto',
               freeMode : true,
             },
+            fenleio:false,
             imghead:"http://elm.cangdu.org/img/",
             list1:[],
             list11:[],
@@ -121,6 +126,9 @@
             shaixuandata:[],
             shaixuantrue:[false,false,false,false,false,false,false],
           }
+      },
+      created(){
+        this.fenlei=this.choosedlist;
       },
       methods:{
         dropdown(){
@@ -185,7 +193,13 @@
             this[li1]=true;
             this.showlist=li1;
           }
-
+          if (li1=="showlist1"){
+            if (this.showlist1==true) {
+              this.fenleio=true;
+            }else{
+              this.fenleio=false;
+            }
+          }
         },
         shaixuan1(cate){
           this.$parent.appshaixuan1(cate);
@@ -266,7 +280,7 @@
     z-index: 998;
   }
   .list1{
-    width: 7.8rem;
+    width: 7.75rem;
     height: 2rem;
     float: left;
     font-size: 0.8rem;

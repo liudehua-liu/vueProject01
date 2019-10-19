@@ -18,7 +18,7 @@
         <div class="footfont">订单</div>
       </div>
     </router-link>
-    <router-link :to="{path:'/profile'}" >
+    <router-link :to="{path:'/home'}" >
       <div class="footlibox" @click.stop="changeone('li4')">
         <i class="iconfont " :style="datali4">&#xe612;</i>
         <div class="footfont">我的</div>
@@ -37,6 +37,13 @@
           type:String,
           default:"li1"
         },
+        alldata:{
+          type:Array,
+          default:[]
+        },
+      },
+      created(){
+        this.changeone(this.toprop);
       },
       data(){
           return{
@@ -44,7 +51,6 @@
             datali2:{fontSize:"1.3rem", margin: "0.2rem 2.05rem",color:"#999999"},
             datali3:{fontSize:"1.3rem", margin: "0.2rem 2.05rem",color:"#999999"},
             datali4:{fontSize:"1.3rem", margin: "0.2rem 2.05rem",color:"#999999"},
-
         }
       },
       methods:{

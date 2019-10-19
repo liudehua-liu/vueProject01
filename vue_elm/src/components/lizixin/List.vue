@@ -1,6 +1,6 @@
 <template>
   <div>
-  <router-link v-for="(v,i) in ball" :to="{path:'/cart',query:{dianName:v}}" class="choosedli"  :key="i">
+  <router-link :to="{path:'/cart',query:{dianName:v}}" class="choosedli" v-for="(v,i) in ball" :key="i">
     <img :src="liimghead+v.image_path" class="sellerliimg">
     <div class="liright">
       <div class="liright1">
@@ -36,10 +36,16 @@
     export default {
         name: "List",
       props:{
-          conds:{
-            type:String,
-            default:""
+        toswiper:{
+          type:Array,
+          default: function () {
+            return[];
           }
+        },
+        title:{
+          type:String,
+          default:""
+        }
       },
       data(){
           return{
@@ -51,16 +57,16 @@
             shaixuan3data:[],
             paidata:{ch:""},
             getcheck: "" ,
-            toswiper: [31.22967,121.4762],
           }
       },
       created(){
-        this.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude="+this.toswiper[0]+"&longitude="+this.toswiper[1]).then((response) => {
-          this.ball = response.data;
-          // console.log(this.ball);
-          this.cball=this.ball;
-          this.mball=this.ball;
-        }).then(()=>{this.listshow});
+        this.cball=this.toswiper;
+        this.ball = this.toswiper;
+        this.mball=this.toswiper;
+        if (this.title!="") {
+          this.shaixuan0(this.title);
+        }
+        this.listshow();
       },
       methods:{
           listshow(){
@@ -80,8 +86,12 @@
                 }
                 this.starts.push(arr);
               });
-
           },
+        getda(data){
+          this.cball=data;
+          this.ball = data;
+          this.mball=data;
+        },
         pai(ch){
             this.paidata=ch;
           if (this.ball[0]==undefined) {
@@ -144,6 +154,18 @@
             this.ball=[];
           }
         },
+        shaixuan0(cate){
+          this.ball=[];
+          if (this.cball!=[]) {
+            this.cball.forEach((v)=>{
+              let s=v.category.split("/");
+              if (s[0]==cate) {
+                this.ball.push(v);
+              }
+            });
+            this.mball=this.ball;
+          }
+        },
         shaixuan1(cate){
             this.ball=[];
           this.cball.forEach((v)=>{
@@ -198,12 +220,12 @@
 <style scoped>
   @font-face {
     font-family: 'iconfont';  /* project id 1453550 */
-    src: url('//at.alicdn.com/t/font_1453550_q2208uu7hv.eot');
-    src: url('//at.alicdn.com/t/font_1453550_q2208uu7hv.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_1453550_q2208uu7hv.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_1453550_q2208uu7hv.woff') format('woff'),
-    url('//at.alicdn.com/t/font_1453550_q2208uu7hv.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_1453550_q2208uu7hv.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_1453550_zsehno33v.eot');
+    src: url('//at.alicdn.com/t/font_1453550_zsehno33v.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1453550_zsehno33v.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1453550_zsehno33v.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1453550_zsehno33v.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1453550_zsehno33v.svg#iconfont') format('svg');
   }
   .iconfont{
     font-family:"iconfont" !important;

@@ -1,12 +1,12 @@
 <template>
-  <div class="maxbox"><router-view></router-view>
+  <div class="maxbox">
   <div class="bunder_c">
     <swiper :options="swiperOption" ref="mySwiper">
       <swiper-slide v-for="(v,i) in pagebtn" :key="i">
-        <router-link :to="{path:'/food',query:{title:btnname}}" class="titleset" v-for="(btnname,index) in pagepro[i]" :key="index">
+        <div class="titleset" v-for="(btnname,index) in pagepro[i]" :key="index" @click.stop="sendname(btnname[0])">
           <img :src="imghead+btnname[1]">
           <p>{{btnname[0]}}</p>
-        </router-link>
+        </div>
         <div style="width: 100%;height: 0.5rem;float: left"></div>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -16,7 +16,7 @@
 
   <div class="bunder_b" >
     <div class="near1"><i class="iconfont" style="font-size: 1rem; margin: 0 0.4rem">&#xe601;</i><p>附近商家</p></div>
-    <List></List>
+    <List ref="shop"></List>
   </div>
   </div>
 </template>
@@ -26,16 +26,12 @@ import List from './List'
   export default {
   components:{Totop,List},
   name: "HomeSwiper",
-    // components: {
-    //   swiper,
-    //   swiperSlide
-    // },
     props:{
       toswiper:{
         type: Array,
         default: function () {
-          return [31.22967,121.4762];
-          }
+          return[];
+        }
       },
     },
   data() {
@@ -47,6 +43,7 @@ import List from './List'
       pagebtn:[],
       pagepro:[],
       imgurl:[],
+      ball:[],
 
       swiperOption: {
         loop: true,
@@ -64,6 +61,7 @@ import List from './List'
   },
     created(){
       //发起网络请求
+      console.log(1)
       this.axios.get("https://elm.cangdu.org/v2/index_entry").then((response) => {
         this.seller = response.data;
       }).then(()=>{
@@ -74,10 +72,16 @@ import List from './List'
         });
         this.btntitle= arr;
         this.titlecount();
+
       });
+
     },
     methods:{
-
+       sendname(btnname){
+         console.log(btnname)
+         let name={path:"/food",query:{title:btnname,ball:this.ball}};
+         this.$router.push(name);
+       },
       titlecount(){
         // 计算展示当前商品所需的页数
         const count = Math.ceil(this.btntitle.length / 8);
@@ -94,7 +98,12 @@ import List from './List'
           this.pagepro[i] = this.btntitle.slice(i*8, (i+1)*8);
         }
       },
-    }
+      getda(data){
+         this.ball=data;
+        this.$refs.shop.getda(data);
+      }
+    },
+
 
 }
 </script>

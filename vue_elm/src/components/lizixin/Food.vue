@@ -1,8 +1,8 @@
 <template>
   <div class="food">
-    <Headli1 :title="citywhere"></Headli1>
-    <Toplist ></Toplist>
-    <List style="margin-top: 5.375rem" ref="list"></List>
+    <Headli1 :title="title" :alldata="alldata"></Headli1>
+    <Toplist></Toplist>
+    <List style="margin-top: 5.375rem" ref="list" :title="title"></List>
   </div>
 
 </template>
@@ -17,11 +17,17 @@
       components:{Toplist,Headli1,List},
       data(){
           return{
-            citywhere: "",
+            title: "",
+            ball:[],
+            alldata:["msite"]
           }
       },
       created(){
-          this.citywhere=this.$router.query.title;
+        this.title=this.$route.query.title;
+        this.ball=this.$route.query.ball;
+      },
+      updated(){
+        this.$refs.list.getda(this.ball);
       },
       methods:{
         appGetMsg(v){

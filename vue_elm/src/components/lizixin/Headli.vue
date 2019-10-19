@@ -1,14 +1,14 @@
 <template>
     <div class="headli">
-      <a :src="{path:'/search/geohash'}">
+      <router-link :to="{path:'/search'}">
         <i class="iconfont" style="font-size: 1.5rem; margin: 0.25rem 1rem;color: white">&#xe60b;</i>
-      </a>
-      <a :src="{path:'/home'}">
+      </router-link>
+      <router-link :to="{path:'/city'}">
         <div class="citywhere">{{this.citywhere}}</div>
-      </a>
-      <a :src="{path:'/profile'}">
+      </router-link>
+      <router-link :to="{path:'/home'}">
         <i class="iconfont" style="font-size: 1.5rem; margin: 0.35rem 1rem;color: white">&#xe60d;</i>
-      </a>
+      </router-link>
     </div>
 </template>
 
@@ -19,7 +19,11 @@
           citywhere:{
             type:String,
             default:"aaaaaaaaa",
-          }
+          },
+        alldata:{
+          type:Array,
+          default:[]
+        },
       }
     }
 </script>
@@ -43,7 +47,7 @@
     float :left;
   }
   .headli{
-    height: 2.375rem;
+    height: 2.5rem;
     width: 100%;
     background-color: dodgerblue;
     position: fixed;
@@ -51,7 +55,7 @@
   }
   .citywhere{
     width: 16.4rem;
-    height: 2.375rem;
+    height: 2.5rem;
     font-size: 1.5rem;
     line-height: 1.5rem;
     text-align: center;
