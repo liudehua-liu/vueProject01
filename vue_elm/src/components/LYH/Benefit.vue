@@ -49,6 +49,7 @@
           <div class="question">?</div>
           </a>
           </div>
+          <button class="upgrade" @click="chang">下载或升级客户端</button>
         </van-tab>
 
       </van-tabs>
@@ -67,6 +68,11 @@
             Arr:[],
             limit:""
           }
+      },
+      methods:{
+        chang(){
+          this.$router.push({path:"/downlond",query:{to:2}})
+        }
       },
       created(){
         this.axios.get("https://elm.cangdu.org/promotion/v2/users/1/hongbaos?limit=20&offset=0").then((response) => {
@@ -253,8 +259,17 @@
     text-align: center;
     color: white;
     border-radius: 50%;
-
-
+  }
+  .upgrade {
+    width: 8rem;
+    height: 2.3rem;
+    font-size: .9rem;
+    color: white;
+    border-radius: .2rem;
+    background-color: #56d176;
+    font-weight: 700;
+    margin-top: 16rem;
+    margin-left: 8.2rem;
   }
 
  </style>

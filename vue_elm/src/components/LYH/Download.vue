@@ -9,9 +9,9 @@
           <button class="confirm" @click="temp=false">确认</button>
         </div>
         <div id="head">
-          <router-link :to="{path:'home'}">
-          <i class="iconjiantou-px--copy-copy iconfont"></i>
-          </router-link>
+          <!--<router-link :to="{path:'home'}">-->
+          <i class="iconjiantou-px--copy-copy iconfont" @click="chang"></i>
+          <!--</router-link>-->
           <span class="my">下载</span>
         </div>
         <div class="icon">
@@ -27,6 +27,15 @@
     export default {
       data(){
         return {temp:false}
+      },
+      methods:{
+        chang(){
+          if (this.$route.query.to==2) {
+            this.$router.push({path:"/benefit"})
+          }else {
+            this.$router.push({path:"/home"})
+          }
+        }
       }
       }
 </script>

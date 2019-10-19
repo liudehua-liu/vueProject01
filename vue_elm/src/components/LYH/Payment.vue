@@ -1,5 +1,12 @@
 <template>
     <div id="app">
+      <div class="hide" v-show="tem">
+        <div class="yuan">
+          <span>!</span>
+        </div>
+        <p class="miaoshu">暂不开放支付功能</p>
+        <button class="confirm" @click="tem=false">确认</button>
+      </div>
       <div id="head">
         <router-link :to="{path:'/vipcard'}">
           <i class="iconjiantou-px--copy-copy iconfont"></i>
@@ -40,6 +47,7 @@
       data() {
         return {
           temp:true,
+          tem:true,
           header:{
             headerTitle:'',
           },
@@ -207,5 +215,50 @@
     border-radius: .4rem;
     color: white;
     font-weight: 700;
+  }
+  .hide {
+    text-align: center;
+    width: 16rem;
+    height: 10rem;
+    background-color: white;
+    border-radius: 0.4rem;
+    position: absolute;
+    left: 3.5rem;
+    top: 13rem;
+    z-index: 10000;
+  }
+
+  .miaoshu {
+    font-family: "楷体";
+
+  }
+
+  .yuan {
+    width: 3.5rem;
+    height: 3.5rem;
+    border: .25rem solid #f8cb86;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 6rem;
+    margin-bottom: 1rem;
+  }
+
+  .yuan span {
+
+    font-size: 3rem;
+    color: #f8cb86;
+  }
+
+  .confirm {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 900;
+    color: white;
+    height: 3rem;
+    width: 16rem;
+    border-radius: 0 0 0.4rem 0.4rem;
+    background-color: #4cd964;
+    outline: none;
+    border: none;
   }
 </style>
