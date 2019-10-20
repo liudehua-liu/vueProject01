@@ -11,6 +11,7 @@
   import Headli from "./Headli"
   import Footli from "./Footli"
   import List from "./List"
+
     export default {
         name: "Msite",
       components:{HomeSwiper,Headli,Footli,List},
