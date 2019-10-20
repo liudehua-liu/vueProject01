@@ -91,6 +91,7 @@
           this.cball=data;
           this.ball = data;
           this.mball=data;
+          this.listshow();
         },
         pai(ch){
             this.paidata=ch;

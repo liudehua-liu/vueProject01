@@ -27,16 +27,17 @@
         }
       },
       created(){
+          if(this.storage.get("citywhere")!=undefined){
+        this.citywhere=this.storage.get("citywhere");
+        this.toswiper=this.storage.get("toswiper");
+      }
         if (this.$router.query!=undefined) {
             this.citywhere=this.$router.query.citywhere;
             this.toswiper=this.$router.query.local;
             this.storage.set("citywhere",this.citywhere);
             this.storage.set("toswiper",this.toswiper);
           }
-          if(this.storage.get("citywhere")!=undefined){
-            this.citywhere=this.storage.get("citywhere");
-            this.toswiper=this.storage.get("toswiper");
-          }
+
         this.storage.set("alldata",this.alldataadd)
         this.axios.get("https://elm.cangdu.org/shopping/restaurants?latitude="+this.toswiper[0]+"&longitude="+this.toswiper[1]).then((response) => {
           this.ball = response.data;

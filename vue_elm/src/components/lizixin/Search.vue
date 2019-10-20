@@ -3,21 +3,23 @@
     <Headli1 :title="title" :alldata="alldata"></Headli1>
     <div class="formcss">
       <div style="float: left;border-radius: 0.5rem;overflow: hidden;margin-right: 0.5rem">
-        <input type="text" name="keywork" v-model="inputdata" placeholder="请输入商家或美食名称" class="inpcss" v-on:change="change()">
-        <i class="iconfont icss1">&#xe66a;</i>
+        <input type="text" name="keywork" v-model="inputdata" placeholder="请输入商家或美食名称" class="inpcss" @keyup="getdataall" @blur="clears=false" @focus="focusc">
+        <div class="icss1" @click.stop="clearup">
+          <i class="iconfont icss1" style="position: relative" v-show="clears">&#xe66a;</i>
+        </div>
       </div>
       <div type="submit" class="subcss" @click="jiao">提交</div>
     </div>
-    <div style="width: 100%;float: left" v-show="lishi">
+    <div style="width: 100%;float: left;z-index: 99" v-show="lishi">
       <div class="gekai">搜索历史</div>
-      <div class="licss">
-        <div class="lif">11111</div>
-        <i class="iconfont lii">&#xe66a;</i>
+      <div class="licss" v-for="(v,i) in lishidata" :key="i">
+        <div class="lif" @click="fillinput(i)">{{v}}</div>
+        <i class="iconfont lii" @click="clearli(i)">&#xe66a;</i>
       </div>
-      <div class="qingcss">清空搜索历史</div>
+      <div class="qingcss" @click="clearall">清空搜索历史</div>
     </div>
     <div class="qingcss" style="color: black" v-show="meiyou">很抱歉！无搜索结果</div>
-    <List :toswiper="ball"></List>
+    <List ref="shop" style="margin-top: 7rem;clear: both"></List>
     <Footli :toprop="'li2'" :alldata="alldataadd"></Footli>
   </div>
 
@@ -36,17 +38,19 @@
         alldata:["msite"],
         alldataadd:[],
         inputdata:"",
-        filldata:[],
         ball:[],
         meiyou:false,
         lishi:false,
+        lishidata:[],
         toswiper:[31.22967,121.4762],
+        timeout:null,
+        clears:false,
       }
     },
     created(){
-      if(this.storage.get("alldata")!=undefined && this.storage.get("filldata")!=undefined && this.storage.get("toswiper")!=undefined){
+      if(this.storage.get("alldata")!=undefined && this.storage.get("lishidata")!=undefined && this.storage.get("toswiper")!=undefined){
         this.alldata=this.storage.get("alldata");
-        this.filldata=this.storage.get("filldata");
+        this.lishidata=this.storage.get("lishidata");
         this.toswiper=this.storage.get("toswiper");
       }else {
         if (this.storage.get("alldata")==undefined) {
@@ -54,29 +58,67 @@
         }else {
           this.alldata=this.storage.get("alldata");
         }
-        this.storage.set("filldata",this.filldata);
+        this.storage.set("lishidata",this.lishidata);
         this.storage.set("toswiper",this.toswiper);
       }
       this.alldataadd=this.alldata.concat("search");
       this.storage.set("alldata",this.alldataadd);
+
     },
     methods:{
       jiao(){
-        this.filldata.concat(this.inputdata);
+        this.clears=false;
+        this.lishidata=this.lishidata.concat(this.inputdata);
         this.axios.get("https://elm.cangdu.org/v4/restaurants?geohash="+this.toswiper[0]+","+this.toswiper[1]+"&keyword="+this.inputdata).then((response) => {
-          this.ball = response.data;
-          this.lishi=false;
-        }).catch(()=>{
-          this.meiyou=true;
-          this.lishi=false;
+          console.log(response.data)
+          if (response.data.message!="搜索餐馆数据失败" && response.data.length!=0){
+            this.ball = response.data;
+            this.$refs.shop.getda(this.ball);
+            this.lishi=false;
+          }else {
+            this.meiyou=true;
+            this.lishi=false;
+          }
         });
       },
-      change(){
+      focusc(){
         if (this.inputdata==""){
-          this.meiyou=false;
-          this.lishi=true;
+          this.clears=false;
+        } else {
+          this.clears=true;
         }
       },
+      fillinput(i){
+        this.inputdata=this.lishidata[i];
+      },
+      clearup(){
+        this.inputdata="";
+        this.clears=false;
+      },
+      clearli(i){
+        this.lishidata.splice(i,1);
+        console.log(this.lishidata)
+        if (this.lishidata.length==0){
+          this.lishi=false;
+        }
+      },
+      clearall(){
+        this.lishidata=[];
+        this.lishi=false;
+      },
+      getdataall(){
+        if (this.inputdata=="") {
+          this.meiyou=false;
+          this.clears=false;
+          if (this.lishidata!=[]) {
+            this.lishi=true;
+          }else {
+            this.lishi=false;
+          }
+        }else{
+          this.clears=true;
+        }
+      }
     }
   }
 </script>
@@ -101,7 +143,7 @@
   }
   .orderhome{
     width: 100%;
-    height: 40rem;
+    height:100%;
     background-color: #F5F5F5;
   }
   .formcss{
